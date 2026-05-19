@@ -242,15 +242,25 @@ if m: print(f'{(int(m.group(1))+int(m.group(3)))//2} {(int(m.group(2))+int(m.gro
     fi
     sleep 0.5
 
-    # Type package name: keyboard adds space after first dot only
+    # Type package name: some keyboards insert a trailing space after first dot
     local FIRST_PART="${PKG_NAME%%.*}"
     local REST="${PKG_NAME#*.}"
     $ADB shell input text "$FIRST_PART"
     sleep 0.2
     $ADB shell input keyevent 56  # dot
     sleep 0.3
-    $ADB shell input keyevent 67  # delete auto-space
-    sleep 0.1
+    $ADB shell uiautomator dump /sdcard/ui_tmp.xml 2>/dev/null
+    local TRAILING_SPACE=$($ADB pull /sdcard/ui_tmp.xml /tmp/ui_tmp.xml 2>/dev/null; python3 -c "
+import re
+xml = open('/tmp/ui_tmp.xml').read()
+m = re.search(r'class=\"android.widget.EditText\".*?text=\"([^\"]*)\"', xml)
+if m and m.group(1).endswith(' '):
+    print('yes')
+" 2>/dev/null)
+    if [ "$TRAILING_SPACE" = "yes" ]; then
+        $ADB shell input keyevent 67  # delete auto-space
+        sleep 0.1
+    fi
     $ADB shell "input text '$REST'"
     sleep 0.3
 

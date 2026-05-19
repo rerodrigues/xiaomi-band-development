@@ -37,12 +37,14 @@ After launching the debug page, ADB `input` commands automate the UI:
 
 ### Package Name Entry
 
-The Samsung keyboard auto-adds a space after the first period in a package name. The script handles this:
+Some keyboards can auto-add a trailing space after the first period in a package name. The script checks the current input value and only deletes when that trailing space is present:
 
 ```bash
 adb shell input text "com"        # type first part
 adb shell input keyevent 56       # dot key
-adb shell input keyevent 67       # delete the auto-space
+adb shell uiautomator dump /sdcard/ui_tmp.xml
+# parse EditText value; if it ends with " ", send delete
+adb shell input keyevent 67       # delete trailing space only when needed
 adb shell input text "example.app" # type the rest
 ```
 
