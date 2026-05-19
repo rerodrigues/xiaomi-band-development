@@ -171,7 +171,7 @@ There is no official way to sideload apps on the international Mi Band 8 Pro. Th
 2. It loads Mi Fitness's APK classes via `PathClassLoader`
 3. It launches the hidden `ThirdAppDebugFragment` via `ActivityManager`
 4. ADB `input` commands automate the debug page UI (enter package name, tap install)
-5. The Samsung file picker opens - you tap the RPK file to install
+5. The phone's file picker opens - you tap the RPK file to install
 
 ```bash
 ./scripts/deploy.sh --project <your-app-dir>
