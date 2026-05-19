@@ -58,6 +58,8 @@ node scripts/emulator-grpc.js screenshot /tmp/screen.png
 # Follow the prompt to tap the RPK file in the file picker
 ```
 
+If you get errors in your terminal, or in the Mi Fitness debug page, check the [Troubleshooting section](docs/deployment-real-device.md#troubleshooting).
+
 ## How Vela JS Quick Apps Work
 
 The band runs **Xiaomi Vela OS** (based on NuttX RTOS). Apps are built with the **Vela JS Quick App** framework - a Vue.js-like MVVM framework.

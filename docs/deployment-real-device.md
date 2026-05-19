@@ -72,3 +72,20 @@ After tapping "install third app", the system file picker opens in the `Xiaomi-b
 - **ADB unauthorized**: Replug USB cable, tap "Allow" on phone. If no popup: Settings > Developer Options > Revoke USB debugging authorizations, then replug.
 - **App not updating on band**: Bump `versionCode` in manifest.json. May need to uninstall first.
 - **"not found" error**: Make sure Mi Fitness (`com.xiaomi.wearable`) is installed, not the Chinese version (`com.xiaomi.wearable.chn`).
+
+- **Error code 3 in Mi Fitness debug page**:
+
+  If you see **预安装失败:3** *(Pre-installation failed, error code: 3)* on Mi Fitness debug page, the device storage is full. Remove some custom watch faces or third-party apps, then try again.
+
+- **Input permission error in terminal**:
+
+  If your terminal shows:
+
+  ```log
+  Exception occurred while executing 'tap': java.lang.SecurityException: Injecting input events requires the caller (or the source of the instrumentation, if any) to have the INJECT_EVENTS permission.
+  ```
+
+  You need additional permissions to control the UI in the Mi Fitness debug page. It's especially the case for Xiaomi/Redmi/POCO phones, which have stricter security settings for ADB.
+
+  To fix this, go to **Developer Options** in your phone, and enable the **USB debugging (Security settings)**. Confirm the multiple warnings that appear, and try running the deploy script again.
+
